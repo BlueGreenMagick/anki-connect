@@ -1,0 +1,2 @@
+class QMessageBox():
+    pass
