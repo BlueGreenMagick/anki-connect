@@ -53,15 +53,12 @@ class AnkiConnect:
         logPath = util.setting('apiLogPath')
         if logPath is not None:
             self.log = open(logPath, 'w')
+        self.server = web.WebServer(self.handler)
 
-        try:
-            self.server = web.WebServer(self.handler)
-            self.server.listen()
-            while True:
-                self.advance()
-        except:
-            print('Failed to listen on port {}.\nMake sure it is available and is not in use.'.format(
-                util.setting('webBindPort')))
+    def listen(self):
+        self.server.listen()
+        while True:
+            self.advance()
 
     def logEvent(self, name, data):
         if self.log is not None:
@@ -1464,10 +1461,3 @@ class AnkiConnect:
                 return True
 
         return False
-
-#
-# Entry
-#
-
-
-ac = AnkiConnect()
